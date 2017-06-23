@@ -49,7 +49,7 @@ config("compiler") {
     # Don't allow visible symbols from libgcc or libc++ to be
     # re-exported.
     "-Wl,--exclude-libs=libgcc.a",
-    "-Wl,--exclude-libs=libc++_static.a",
+    "-Wl,--exclude-libs=libgnustl_static.a",
 
     # Don't allow visible symbols from libraries that contain
     # assembly code with symbols that aren't hidden properly.
@@ -101,7 +101,7 @@ config("runtime_library") {
     libcxx_include_path =
         rebase_path("$android_libcpp_root/include", root_build_dir)
     libcxxabi_include_path =
-        rebase_path("$android_ndk_root/sources/cxx-stl/llvm-libc++abi/include",
+        rebase_path("$android_ndk_root/sources/cxx-stl/gnu-libstdc++/4.9/libs/${android_app_abi}/include",
                     root_build_dir)
 
     if (!is_clang) {
@@ -112,17 +112,17 @@ config("runtime_library") {
     }
   } else {
     libcxx_include_path =
-        rebase_path("$android_libcpp_root/libcxx/include", root_build_dir)
+        rebase_path("$android_libcpp_root/include", root_build_dir)
     libcxxabi_include_path = rebase_path(
-            "$android_ndk_root/sources/cxx-stl/llvm-libc++abi/libcxxabi/include",
+            "$android_ndk_root/sources/cxx-stl/gnu-libstdc++/4.9/libs/${android_app_abi}/include",
             root_build_dir)
   }
   cflags_cc += [
     "-isystem" + libcxx_include_path,
     "-isystem" + libcxxabi_include_path,
-    "-isystem" +
-        rebase_path("$android_ndk_root/sources/android/support/include",
-                    root_build_dir),
+#    "-isystem" +
+#        rebase_path("$android_ndk_root/sources/android/support/include",
+#                    root_build_dir),
   ]
 
   defines = [ "__GNU_SOURCE=1" ]  # Necessary for clone().
@@ -133,18 +133,18 @@ config("runtime_library") {
   # ASan needs to dynamically link to libc++ even in static builds so
   # that it can interpose operator new.
   if (is_component_build || is_asan) {
-    libs = [ "c++_shared" ]
+    libs = [ "gnustl_shared" ]
   } else {
-    libs = [ "c++_static" ]
+    libs = [ "gnustl_static" ]
   }
-  libs += [
-    "c++abi",
-    "android_support",
-  ]
+#  libs += [
+#    "c++abi",
+#    "android_support",
+#  ]
 
   # arm builds of libc++ starting in NDK r12 depend on unwind.
   if (current_cpu == "arm") {
-    libs += [ "unwind" ]
+#    libs += [ "unwind" ]
   }
 
   # Manually link the libgcc.a that the cross compiler uses. This is

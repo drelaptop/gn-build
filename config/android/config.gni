@@ -22,8 +22,8 @@ if (is_android) {
 
   if (!defined(default_android_ndk_root)) {
     default_android_ndk_root = "//third_party/android_tools/ndk"
-    default_android_ndk_version = "r12b"
-    default_android_ndk_major_version = 12
+    default_android_ndk_version = "r10e"
+    default_android_ndk_major_version = 10
   } else {
     assert(defined(default_android_ndk_version))
     assert(defined(default_android_ndk_major_version))
@@ -219,7 +219,7 @@ if (is_android) {
   # Subdirectories inside android_ndk_root that contain the sysroot for the
   # associated platform.
   # If you raise this, reevaluate the snprintf=snprintf in ./BUILD.gn.
-  _android_api_level = 16
+  _android_api_level = 9
   x86_android_sysroot_subdir =
       "platforms/android-${_android_api_level}/arch-x86"
   arm_android_sysroot_subdir =
@@ -239,7 +239,7 @@ if (is_android) {
   # Toolchain root directory for each build. The actual binaries are inside
   # a "bin" directory inside of these.
   _android_toolchain_version = "4.9"
-  _android_toolchain_detailed_version = "4.9.x"
+  _android_toolchain_detailed_version = "4.9"
   x86_android_toolchain_root = "$android_ndk_root/toolchains/x86-${_android_toolchain_version}/prebuilt/${android_host_os}-${android_host_arch}"
   arm_android_toolchain_root = "$android_ndk_root/toolchains/arm-linux-androideabi-${_android_toolchain_version}/prebuilt/${android_host_os}-${android_host_arch}"
   mips_android_toolchain_root = "$android_ndk_root/toolchains/mipsel-linux-android-${_android_toolchain_version}/prebuilt/${android_host_os}-${android_host_arch}"
@@ -292,7 +292,7 @@ if (is_android) {
 
   # Toolchain stuff ------------------------------------------------------------
 
-  android_libcpp_root = "$android_ndk_root/sources/cxx-stl/llvm-libc++"
+  android_libcpp_root = "$android_ndk_root/sources/cxx-stl/gnu-libstdc++/4.9"
 
   # ABI ------------------------------------------------------------------------
 
