@@ -100,7 +100,7 @@ declare_args() {
   strip_absolute_paths_from_debug_symbols = false
 
   # Allow projects that wish to stay on C++11 to override Chromium's default.
-  use_cxx11 = false
+  use_cxx11 = true #cjh false
 
   # Strip the debug info of symbols file in lib.unstripped to reduce size.
   strip_debug_info = false
@@ -483,7 +483,7 @@ config("compiler") {
 
   # C11/C++11 compiler flags setup.
   # ---------------------------
-  if (is_linux || is_android || (is_nacl && is_clang) || current_os == "aix") {
+  if (is_linux || (is_nacl && is_clang) || current_os == "aix") {
     if (target_os == "android") {
       cxx11_override = use_cxx11_on_android
     } else {

@@ -14,6 +14,7 @@ import argparse
 import os
 import subprocess
 import sys
+import shutil
 
 import wrapper_utils
 
@@ -63,9 +64,10 @@ def main():
 
   # Finally, strip the linked executable (if desired).
   if args.strip:
-    result = subprocess.call(CommandToRun([
-        args.strip, '-o', args.output, args.unstripped_file
-        ]))
+    # result = subprocess.call(CommandToRun([
+    #     args.strip, '-o', args.output, args.unstripped_file
+    #     ]))
+    shutil.copy(args.unstripped_file, args.output)
 
   return result
 
